@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "url.giphy.api",
+      "type": "java.lang.String",
+      "description": "Description for url.giphy.api."
+  }
+] }
