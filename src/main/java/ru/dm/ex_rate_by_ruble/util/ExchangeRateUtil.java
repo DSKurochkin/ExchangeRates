@@ -1,6 +1,7 @@
 package ru.dm.ex_rate_by_ruble.util;
 
 import ru.dm.ex_rate_by_ruble.model.ExchangeRateResponse;
+import ru.dm.ex_rate_by_ruble.util.exception.NotFoundCurrencyCodeException;
 
 public class ExchangeRateUtil {
     public static boolean isAppCurrencyWin(String userCode, String appCode, String baseCode
@@ -9,7 +10,7 @@ public class ExchangeRateUtil {
             return getRateByBase(todayExRate, appCode) > getRateByBase(yesterdayExRate, appCode);
         }
         if (!todayExRate.getRates().containsKey(userCode) || userCode.equals(appCode)) {
-            throw new RuntimeException("Unsupported currency code");
+            throw new NotFoundCurrencyCodeException("Invalid or unsupported currency code");
         }
 
         return getRateByBase(todayExRate, appCode) - getRateByBase(yesterdayExRate, appCode)

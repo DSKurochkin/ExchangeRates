@@ -8,7 +8,6 @@ import ru.dm.ex_rate_by_ruble.model.ExchangeRateResponse;
 
 @FeignClient(value = "Openexchangerates", url = "${url.openexchangerates.api}")
 public interface OpenExChangeRatesService {
-    String apiId = "e90abb7c3554474e8276f2d012855faa";
 
     @GetMapping("/latest.json?app_id=" + "${key.openexchangerates.api}")
     ExchangeRateResponse getToday();
@@ -17,6 +16,6 @@ public interface OpenExChangeRatesService {
     ExchangeRateResponse getYesterday(@PathVariable String date);
 
     @GetMapping("/currencies.json?app_id=" + "${key.openexchangerates.api}")
-    CurrencyCodeNameResponse getCurrencySymbols();
+    CurrencyCodeNameResponse getCurrencyCodes();
 
 }

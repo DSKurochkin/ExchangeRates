@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.dm.ex_rate_by_ruble.Feign.GiphyService;
 import ru.dm.ex_rate_by_ruble.Feign.OpenExChangeRatesService;
@@ -30,8 +31,8 @@ public class Controller {
     @Autowired
     private GiphyService giphyService;
 
-    @GetMapping("/check/{userCode}")
-    SimpleGif checkAppCurrency(@PathVariable String userCode) {
+    @GetMapping("/check")
+    public SimpleGif checkAppCurrency(@RequestParam String userCode) {
         String yesterdayInString = LocalDate.now().minusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + ".json";
         ExchangeRateResponse todayExRate = openExChangeRatesService.getToday();
         ExchangeRateResponse yesterdayExRate = openExChangeRatesService.getYesterday(yesterdayInString);
@@ -43,9 +44,9 @@ public class Controller {
 
 
     @GetMapping("/codes")
-    Map<String, String> getCurrencySymbols() {
-        Map<String, String> result = openExChangeRatesService.getCurrencySymbols().getMap();
-        result.remove(result.get(unsupCode));
+    public Map<String, String> getCurrencyCodes() {
+        Map<String, String> result = openExChangeRatesService.getCurrencyCodes().getMap();
+        result.remove(unsupCode);
         return result;
     }
 
