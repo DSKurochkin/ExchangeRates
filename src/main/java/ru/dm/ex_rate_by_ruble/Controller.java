@@ -3,7 +3,6 @@ package ru.dm.ex_rate_by_ruble;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.dm.ex_rate_by_ruble.Feign.GiphyService;
@@ -36,7 +35,7 @@ public class Controller {
         String yesterdayInString = LocalDate.now().minusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + ".json";
         ExchangeRateResponse todayExRate = openExChangeRatesService.getToday();
         ExchangeRateResponse yesterdayExRate = openExChangeRatesService.getYesterday(yesterdayInString);
-        if (ExchangeRateUtil.isAppCurrencyWin(userCode.toUpperCase(), appCode, baseCode, todayExRate, yesterdayExRate)) {
+        if (ExchangeRateUtil.isAppCurrencyWon(userCode.toUpperCase(), appCode, baseCode, todayExRate, yesterdayExRate)) {
             return giphyService.getRich().getData();
         }
         return giphyService.getBroke().getData();

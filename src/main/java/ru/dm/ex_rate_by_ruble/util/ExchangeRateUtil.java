@@ -4,21 +4,21 @@ import ru.dm.ex_rate_by_ruble.model.ExchangeRateResponse;
 import ru.dm.ex_rate_by_ruble.util.exception.NotFoundCurrencyCodeException;
 
 public class ExchangeRateUtil {
-    public static boolean isAppCurrencyWin(String userCode, String appCode, String baseCode
+    public static boolean isAppCurrencyWon(String userCode, String appCode, String baseCode
             , ExchangeRateResponse todayExRate, ExchangeRateResponse yesterdayExRate) {
         if (userCode.equals(baseCode)) {
-            return getRateByBase(todayExRate, appCode) > getRateByBase(yesterdayExRate, appCode);
+            return getRateInBaseCurrency(todayExRate, appCode) > getRateInBaseCurrency(yesterdayExRate, appCode);
         }
         if (!todayExRate.getRates().containsKey(userCode) || userCode.equals(appCode)) {
             throw new NotFoundCurrencyCodeException("Invalid or unsupported currency code");
         }
 
-        return getRateByBase(todayExRate, appCode) - getRateByBase(yesterdayExRate, appCode)
-                > getRateByBase(todayExRate, userCode) - getRateByBase(yesterdayExRate, userCode);
+        return getRateInBaseCurrency(todayExRate, appCode) - getRateInBaseCurrency(yesterdayExRate, appCode)
+                > getRateInBaseCurrency(todayExRate, userCode) - getRateInBaseCurrency(yesterdayExRate, userCode);
     }
 
-    private static Double getRateByBase(ExchangeRateResponse exchangeRate, String userCode) {
-        return exchangeRate.getRates().get(userCode);
+    private static Double getRateInBaseCurrency(ExchangeRateResponse exchangeRate, String userCode) {
+        return 1 / exchangeRate.getRates().get(userCode);
     }
 }
 

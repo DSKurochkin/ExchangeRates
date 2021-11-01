@@ -38,7 +38,7 @@ public class ExceptionInfoHandler {
         return e.getLocalizedMessage() != null ? e.getLocalizedMessage() : e.getClass().getName();
     }
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)// 404
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NotFoundCurrencyCodeException.class)
     public ErrorInfo unsupportedTimeError(HttpServletRequest req, NotFoundCurrencyCodeException e) {
         return getErrorInfo(req, e, NOT_FOUND_CODE);
